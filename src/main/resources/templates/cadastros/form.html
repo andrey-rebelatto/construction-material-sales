@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/layout :: head}"></head>
+  <body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div class="shell">
+      <header th:replace="~{fragments/layout :: topbar}"></header>
+      <main class="main">
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        <a class="back" th:href="@{/{s}(s=${secao})}"
+          ><svg class="icon" aria-hidden="true"><use href="#i-back" /></svg
+          ><span
+            th:text="${'Voltar para ' + #strings.toLowerCase(titulo)}"
+          ></span
+        ></a>
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">CADA DETALHE CONTA</span>
+            <h1>
+              <span
+                th:text="${(id == null ? 'Novo ' : 'Editar ') + singular}"
+              ></span>
+            </h1>
+            <p>Preencha os dados abaixo para manter tudo em dia.</p>
+          </div>
+        </div>
+        <div class="form-layout">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Informações do cadastro</h2>
+                <p>Os campos com * são obrigatórios.</p>
+              </div>
+              <svg class="icon" aria-hidden="true"><use href="#i-edit" /></svg>
+            </div>
+            <form
+              method="post"
+              th:action="${id == null} ? @{/{s}(s=${secao})} : @{/{s}/{id}(s=${secao},id=${id})}"
+              th:object="${form}"
+            >
+              <div class="form-body">
+                <div
+                  class="alert error"
+                  role="alert"
+                  th:if="${#fields.hasAnyErrors()}"
+                >
+                  <div
+                    th:each="error : ${#fields.allErrors()}"
+                    th:text="${error}"
+                  ></div>
+                </div>
+                <div class="field">
+                  <label for="nome">Nome <span>*</span></label
+                  ><input
+                    id="nome"
+                    th:field="*{nome}"
+                    required
+                    maxlength="120"
+                    placeholder="Informe o nome"
+                    autofocus
+                  />
+                </div>
+                <div class="field" th:if="${tipo == 'cpf'}">
+                  <label for="cpf">CPF <span>*</span></label
+                  ><input
+                    id="cpf"
+                    th:field="*{cpf}"
+                    required
+                    maxlength="14"
+                    inputmode="numeric"
+                    data-cpf
+                    placeholder="000.000.000-00"
+                    aria-describedby="cpf-hint"
+                  /><small id="cpf-hint"
+                    >Informe os 11 dígitos. Você pode usar ou omitir a
+                    pontuação.</small
+                  >
+                </div>
+                <div class="field" th:if="${tipo == 'preco'}">
+                  <label for="preco">Preço unitário em R$ <span>*</span></label
+                  ><input
+                    id="preco"
+                    th:field="*{preco}"
+                    required
+                    type="number"
+                    min="0.01"
+                    max="9999999999.99"
+                    step="0.01"
+                    placeholder="0,00"
+                    aria-describedby="preco-hint"
+                  /><small id="preco-hint"
+                    >Valor por unidade, com até duas casas decimais.</small
+                  >
+                </div>
+              </div>
+              <div class="form-actions">
+                <a class="btn secondary" th:href="@{/{s}(s=${secao})}"
+                  >Cancelar</a
+                ><button class="btn" type="submit">
+                  <svg class="icon" aria-hidden="true">
+                    <use href="#i-check" /></svg
+                  >Salvar cadastro
+                </button>
+              </div>
+            </form>
+          </section>
+          <aside class="aside-guide">
+            <span class="guide-icon"
+              ><svg class="icon" aria-hidden="true"><use href="#i-info" /></svg
+            ></span>
+            <h3>Um cadastro bem cuidado</h3>
+            <p th:if="${tipo == 'cpf'}">
+              Use o nome completo e confira o CPF antes de salvar. O sistema
+              verifica os dígitos e impede CPFs duplicados.
+            </p>
+            <p th:if="${tipo == 'preco'}">
+              Descreva o material de forma clara. Inclua o peso, a medida ou a
+              embalagem quando fizer sentido.
+            </p>
+            <div class="note">
+              <h3>Seus dados ficam protegidos</h3>
+              <p>
+                Cadastros usados em vendas não podem ser excluídos. Você pode
+                editar seus dados quando precisar.
+              </p>
+            </div>
+          </aside>
+        </div>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+      </main>
+    </div>
+  </body>
+</html>

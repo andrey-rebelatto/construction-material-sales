@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/layout :: head}"></head>
+  <body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div class="shell">
+      <header th:replace="~{fragments/layout :: topbar}"></header>
+      <main class="main">
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">VAMOS ENCONTRAR O CAMINHO</span>
+            <h1>
+              <span
+                th:text="${status == 404 ? 'Página não encontrada' : 'Não foi possível concluir'}"
+              ></span>
+            </h1>
+            <p>
+              O registro pode ter sido removido ou o endereço pode estar
+              incorreto.
+            </p>
+          </div>
+        </div>
+        <section class="panel empty">
+          <svg class="icon" aria-hidden="true"><use href="#i-info" /></svg>
+          <h3
+            th:text="${status == 404 ? 'Nada por aqui' : 'Tente novamente'}"
+          ></h3>
+          <p>Volte ao início para continuar usando o sistema.</p>
+          <a class="btn" th:href="@{/}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-back" /></svg>
+            Ir para o início</a
+          >
+        </section>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+      </main>
+    </div>
+  </body>
+</html>

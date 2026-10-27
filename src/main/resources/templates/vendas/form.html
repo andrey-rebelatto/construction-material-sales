@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/layout :: head}"></head>
+  <body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div class="shell">
+      <header th:replace="~{fragments/layout :: topbar}"></header>
+      <main class="main">
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        <a class="back" th:href="@{/vendas}"
+          ><svg class="icon" aria-hidden="true"><use href="#i-back" /></svg
+          >Voltar para vendas</a
+        >
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">DO BALCÃO PARA A OBRA</span>
+            <h1>
+              <span
+                th:text="${id == null ? 'Nova venda' : 'Editar venda'}"
+              ></span>
+            </h1>
+            <p>
+              Escolha o cliente, o vendedor e os materiais. O resto a gente
+              soma.
+            </p>
+          </div>
+        </div>
+        <div class="form-layout">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Dados da venda</h2>
+                <p>Os campos com * são obrigatórios.</p>
+              </div>
+              <svg class="icon" aria-hidden="true"><use href="#i-bag" /></svg>
+            </div>
+            <form
+              id="sale-form"
+              method="post"
+              th:action="${id == null} ? @{/vendas} : @{/vendas/{id}(id=${id})}"
+              th:object="${form}"
+            >
+              <div class="form-body">
+                <div
+                  class="alert error"
+                  role="alert"
+                  th:if="${#fields.hasAnyErrors()}"
+                >
+                  <div
+                    th:each="error : ${#fields.allErrors()}"
+                    th:text="${error}"
+                  ></div>
+                </div>
+                <div
+                  class="alert error"
+                  th:if="${#lists.isEmpty(clientes) or #lists.isEmpty(vendedores) or #lists.isEmpty(produtos)}"
+                >
+                  Cadastre ao menos um cliente, um vendedor e um produto antes
+                  de registrar uma venda. Use o menu lateral para fazer os
+                  cadastros.
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="clienteId">Cliente <span>*</span></label
+                    ><select id="clienteId" th:field="*{clienteId}" required>
+                      <option value="">Selecione o cliente</option>
+                      <option
+                        th:each="cliente : ${clientes}"
+                        th:value="${cliente.id}"
+                        th:text="${cliente.nome}"
+                      ></option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="vendedorId">Vendedor <span>*</span></label
+                    ><select id="vendedorId" th:field="*{vendedorId}" required>
+                      <option value="">Selecione o vendedor</option>
+                      <option
+                        th:each="vendedor : ${vendedores}"
+                        th:value="${vendedor.id}"
+                        th:text="${vendedor.nome}"
+                      ></option>
+                    </select>
+                  </div>
+                </div>
+                <h3 style="font-size: 14px; margin: 6px 0 22px">
+                  Materiais da venda
+                </h3>
+                <div class="item-row item-labels" aria-hidden="true">
+                  <span>Produto *</span><span>Qtd. *</span
+                  ><span style="text-align: right">Subtotal</span><span></span>
+                </div>
+                <div id="cart-items">
+                  <div class="item-row" th:each="item, stat : *{itens}">
+                    <select
+                      class="product-select"
+                      th:field="*{itens[__${stat.index}__].produtoId}"
+                      required
+                      aria-label="Produto"
+                    >
+                      <option value="" data-price="0">
+                        Selecione o material
+                      </option>
+                      <option
+                        th:each="produto : ${produtos}"
+                        th:value="${produto.id}"
+                        th:text="${produto.nome}"
+                        th:data-price="${precosHistoricos != null and precosHistoricos.containsKey(produto.id) ? precosHistoricos.get(produto.id) : produto.preco}"
+                      ></option></select
+                    ><input
+                      class="quantity"
+                      th:field="*{itens[__${stat.index}__].quantidade}"
+                      type="number"
+                      min="1"
+                      max="1000000"
+                      required
+                      aria-label="Quantidade"
+                    /><output class="line-total" aria-label="Subtotal do item"
+                      >R$ 0,00</output
+                    ><button
+                      class="action delete remove-item"
+                      type="button"
+                      aria-label="Remover item"
+                    >
+                      <svg class="icon" aria-hidden="true">
+                        <use href="#i-delete" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="cart-tools">
+                  <button class="btn secondary" id="add-item" type="button">
+                    <svg class="icon" aria-hidden="true">
+                      <use href="#i-plus" /></svg
+                    >Adicionar material</button
+                  ><small class="muted"
+                    >Produtos repetidos serão agrupados.</small
+                  >
+                </div>
+                <div class="cart-total">
+                  <span>Total da venda</span
+                  ><strong id="cart-total" aria-live="polite">R$ 0,00</strong>
+                </div>
+              </div>
+              <div class="form-actions">
+                <a class="btn secondary" th:href="@{/vendas}">Cancelar</a
+                ><button
+                  class="btn"
+                  type="submit"
+                  th:disabled="${#lists.isEmpty(clientes) or #lists.isEmpty(vendedores) or #lists.isEmpty(produtos)}"
+                >
+                  <svg class="icon" aria-hidden="true">
+                    <use href="#i-check" /></svg
+                  >Salvar venda
+                </button>
+              </div>
+            </form>
+          </section>
+          <aside class="aside-guide">
+            <span class="guide-icon"
+              ><svg class="icon" aria-hidden="true"><use href="#i-bag" /></svg
+            ></span>
+            <h3>Pronto para fechar negócio?</h3>
+            <p>
+              Confira o cliente e os materiais antes de salvar. Você pode
+              adicionar vários produtos à mesma venda.
+            </p>
+            <ul>
+              <li>Quantidade em unidades inteiras.</li>
+              <li>Totais calculados automaticamente.</li>
+              <li>Todos os itens salvos juntos.</li>
+            </ul>
+            <div class="note">
+              <h3>Preço com memória</h3>
+              <p>
+                Ao editar, os produtos que já estavam na venda mantêm o preço
+                original. Novos produtos usam o preço atual do catálogo.
+              </p>
+            </div>
+          </aside>
+        </div>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+      </main>
+    </div>
+  </body>
+</html>

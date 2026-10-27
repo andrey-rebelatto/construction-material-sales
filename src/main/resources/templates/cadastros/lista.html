@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/layout :: head}"></head>
+  <body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div class="shell">
+      <header th:replace="~{fragments/layout :: topbar}"></header>
+      <main class="main">
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">ORGANIZE SEUS CADASTROS</span>
+            <h1><span th:text="${titulo}"></span></h1>
+            <p>
+              <span
+                th:text="${tipo == 'preco' ? 'Os materiais que fazem parte de cada obra.' : 'Pessoas que fazem parte da sua história.'}"
+              ></span>
+            </p>
+          </div>
+          <a class="btn" th:href="@{/{s}/novo(s=${secao})}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg
+            ><span th:text="${'Novo ' + singular}"></span
+          ></a>
+        </div>
+        <section class="panel">
+          <form class="filters" method="get" th:action="@{/{s}(s=${secao})}">
+            <div class="search">
+              <svg class="icon" aria-hidden="true"><use href="#i-search" /></svg
+              ><input
+                aria-label="Buscar por nome"
+                name="busca"
+                th:value="${busca}"
+                placeholder="Buscar por nome..."
+              />
+            </div>
+            <button class="btn secondary" type="submit">Buscar</button
+            ><a
+              class="text-link"
+              th:if="${!#strings.isEmpty(busca)}"
+              th:href="@{/{s}(s=${secao})}"
+              >Limpar</a
+            ><span
+              class="count"
+              th:text="${#lists.size(registros) + ' registro(s)'}"
+            ></span>
+          </form>
+          <div class="table-scroll" th:unless="${#lists.isEmpty(registros)}">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nome</th>
+                  <th
+                    th:text="${tipo == 'preco' ? 'Preço unitário' : 'CPF'}"
+                  ></th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="registro : ${registros}">
+                  <td
+                    class="id"
+                    th:text="${'#' + #numbers.formatInteger(registro.id, 4)}"
+                  ></td>
+                  <td><strong th:text="${registro.nome}"></strong></td>
+                  <td>
+                    <span
+                      th:if="${tipo == 'preco'}"
+                      class="amount"
+                      th:text="${@fmt.moeda(registro.preco)}"
+                    ></span
+                    ><span
+                      th:if="${tipo == 'cpf'}"
+                      th:text="${@fmt.cpf(registro.cpf)}"
+                    ></span>
+                  </td>
+                  <td>
+                    <div class="actions">
+                      <a
+                        class="action"
+                        th:href="@{/{s}/{id}/editar(s=${secao},id=${registro.id})}"
+                        th:aria-label="${'Editar ' + registro.nome}"
+                        ><svg class="icon" aria-hidden="true">
+                          <use href="#i-edit" /></svg
+                      ></a>
+                      <form
+                        method="post"
+                        th:action="@{/{s}/{id}/excluir(s=${secao},id=${registro.id})}"
+                        th:data-confirm="${'Excluir ' + registro.nome + '? Esta ação não pode ser desfeita.'}"
+                      >
+                        <button
+                          class="action delete"
+                          type="submit"
+                          th:aria-label="${'Excluir ' + registro.nome}"
+                        >
+                          <svg class="icon" aria-hidden="true">
+                            <use href="#i-delete" />
+                          </svg>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty" th:if="${#lists.isEmpty(registros)}">
+            <svg class="icon" aria-hidden="true"><use href="#i-search" /></svg>
+            <h3>Nenhum registro encontrado</h3>
+            <p>Cadastre um novo registro ou tente outro nome na busca.</p>
+            <a class="btn" th:href="@{/{s}/novo(s=${secao})}"
+              ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg
+              ><span th:text="${'Novo ' + singular}"></span
+            ></a>
+          </div>
+          <div class="table-foot">
+            Cadastros vinculados a vendas têm a exclusão protegida.
+          </div>
+        </section>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/layout :: head}"></head>
+  <body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div class="shell">
+      <header th:replace="~{fragments/layout :: topbar}"></header>
+      <main class="main">
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">NEGÓCIOS QUE CONSTROEM</span>
+            <h1>Vendas</h1>
+            <p>Consulte, edite e acompanhe cada venda da sua loja.</p>
+          </div>
+          <a class="btn" th:href="@{/vendas/nova}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
+            Nova venda</a
+          >
+        </div>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Histórico de vendas</h2>
+              <p>Da mais recente para a mais antiga.</p>
+            </div>
+            <span
+              class="tag"
+              th:text="${#lists.size(vendas) + ' venda(s)'}"
+            ></span>
+          </div>
+          <div class="table-scroll" th:unless="${#lists.isEmpty(vendas)}">
+            <table>
+              <thead>
+                <tr>
+                  <th>Venda</th>
+                  <th>Cliente</th>
+                  <th>Data</th>
+                  <th>Total</th>
+                  <th><span class="muted">Detalhes</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="venda : ${vendas}">
+                  <td>
+                    <a
+                      class="id"
+                      th:href="@{/vendas/{id}(id=${venda.id})}"
+                      th:text="${'#' + #numbers.formatInteger(venda.id, 4)}"
+                    ></a>
+                  </td>
+                  <td>
+                    <strong th:text="${venda.cliente.nome}"></strong
+                    ><small th:text="${venda.vendedor.nome}"></small>
+                  </td>
+                  <td
+                    th:text="${#temporals.format(venda.dataHora, 'dd/MM/yyyy')}"
+                  ></td>
+                  <td class="amount" th:text="${@fmt.moeda(venda.total)}"></td>
+                  <td>
+                    <a
+                      class="action"
+                      th:href="@{/vendas/{id}(id=${venda.id})}"
+                      th:aria-label="${'Ver venda ' + venda.id}"
+                      ><svg class="icon" aria-hidden="true">
+                        <use href="#i-arrow" /></svg
+                    ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty" th:if="${#lists.isEmpty(vendas)}">
+            <svg class="icon" aria-hidden="true"><use href="#i-box" /></svg>
+            <h3>Nenhuma venda por enquanto</h3>
+            <p>Comece escolhendo um cliente e os materiais da obra.</p>
+            <a class="btn" th:href="@{/vendas/nova}"
+              ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
+              Registrar primeira venda</a
+            >
+          </div>
+          <div class="table-foot">
+            Abra uma venda para consultar os itens, editar ou excluir.
+          </div>
+        </section>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+      </main>
+    </div>
+  </body>
+</html>

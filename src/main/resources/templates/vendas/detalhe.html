@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/layout :: head}"></head>
+  <body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div class="shell">
+      <header th:replace="~{fragments/layout :: topbar}"></header>
+      <main class="main">
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        <a class="back" th:href="@{/vendas}"
+          ><svg class="icon" aria-hidden="true"><use href="#i-back" /></svg
+          >Voltar para vendas</a
+        >
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">CADA VENDA TEM UMA HISTÓRIA</span>
+            <h1>
+              <span
+                th:text="${'Venda #' + #numbers.formatInteger(venda.id, 4)}"
+              ></span>
+            </h1>
+            <p>Confira os materiais e os dados desta venda.</p>
+          </div>
+          <div class="actions">
+            <a
+              class="btn secondary"
+              th:href="@{/vendas/{id}/editar(id=${venda.id})}"
+              ><svg class="icon" aria-hidden="true"><use href="#i-edit" /></svg
+              >Editar venda</a
+            >
+            <form
+              method="post"
+              th:action="@{/vendas/{id}/excluir(id=${venda.id})}"
+              data-confirm="Excluir esta venda e todos os seus itens? Esta ação não pode ser desfeita."
+            >
+              <button class="btn danger" type="submit">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-delete" /></svg
+                >Excluir
+              </button>
+            </form>
+          </div>
+        </div>
+        <section class="panel">
+          <div class="detail-meta">
+            <div>
+              <small>Cliente</small
+              ><strong th:text="${venda.cliente.nome}"></strong
+              ><small
+                style="margin: 7px 0 0"
+                th:text="${@fmt.cpf(venda.cliente.cpf)}"
+              ></small>
+            </div>
+            <div>
+              <small>Vendedor responsável</small
+              ><strong th:text="${venda.vendedor.nome}"></strong>
+            </div>
+            <div>
+              <small>Data do registro</small
+              ><strong
+                th:text="${#temporals.format(venda.dataHora, 'dd/MM/yyyy · HH:mm')}"
+              ></strong>
+            </div>
+          </div>
+          <div class="panel-head">
+            <h2>Materiais da venda</h2>
+            <span
+              class="tag"
+              th:text="${#lists.size(venda.itens) + ' produto(s)'}"
+            ></span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Quantidade</th>
+                  <th>Preço unitário</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="item : ${venda.itens}">
+                  <td><strong th:text="${item.produto.nome}"></strong></td>
+                  <td th:text="${item.quantidade}"></td>
+                  <td th:text="${@fmt.moeda(item.precoUnitario)}"></td>
+                  <td
+                    class="amount"
+                    th:text="${@fmt.moeda(item.subtotal)}"
+                  ></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="detail-total">
+            <small class="muted">Total da venda</small
+            ><strong th:text="${@fmt.moeda(venda.total)}"></strong>
+          </div>
+          <div class="table-foot">
+            Os preços unitários são os valores registrados na venda.
+          </div>
+        </section>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+      </main>
+    </div>
+  </body>
+</html>

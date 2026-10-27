@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#245443" />
+    <title th:text="${titulo + ' · Construa'}">Construa</title>
+    <link rel="icon" th:href="@{/favicon.svg}" type="image/svg+xml" />
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+    <script th:src="@{/js/app.js}" defer></script>
+  </head>
+  <body>
+    <div th:fragment="sidebar">
+      <div th:replace="~{fragments/icons :: sprite}"></div>
+      <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+        <a class="brand" th:href="@{/}"
+          ><span class="brand-icon">⌂</span
+          ><span>construa<small>GESTÃO DE VENDAS</small></span></a
+        >
+        <p class="nav-label">ESPAÇO DE TRABALHO</p>
+        <nav class="nav">
+          <a
+            th:href="@{/}"
+            th:classappend="${secao == 'inicio' ? 'active' : ''}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-grid" /></svg
+            ><span>Visão geral</span></a
+          ><a
+            th:href="@{/vendas}"
+            th:classappend="${secao == 'vendas' ? 'active' : ''}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-bag" /></svg
+            ><span>Vendas</span></a
+          ><a
+            th:href="@{/clientes}"
+            th:classappend="${secao == 'clientes' ? 'active' : ''}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-users" /></svg
+            ><span>Clientes</span></a
+          ><a
+            th:href="@{/produtos}"
+            th:classappend="${secao == 'produtos' ? 'active' : ''}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-box" /></svg
+            ><span>Produtos</span></a
+          ><a
+            th:href="@{/vendedores}"
+            th:classappend="${secao == 'vendedores' ? 'active' : ''}"
+            ><svg class="icon" aria-hidden="true"><use href="#i-user" /></svg
+            ><span>Vendedores</span></a
+          >
+        </nav>
+        <div class="nav-footer">
+          <span class="tag"><span class="dot"></span> Sistema de vendas</span>
+          <p
+            class="muted"
+            style="font-size: 10px; line-height: 1.7; margin-bottom: 0"
+          >
+            Materiais para construir.<br />Organização para crescer.
+          </p>
+        </div>
+      </aside>
+    </div>
+    <header class="topbar" th:fragment="topbar">
+      <div>
+        <button
+          class="menu-toggle"
+          aria-label="Abrir menu"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          <svg class="icon" aria-hidden="true">
+            <use href="#i-menu" />
+          </svg></button
+        ><a class="mobile-brand" th:href="@{/}">construa</a>
+        <div class="breadcrumbs">
+          Espaço de trabalho &nbsp; /
+          <span th:text="${titulo}">Visão geral</span>
+        </div>
+      </div>
+      <div class="profile">
+        <span class="avatar">MC</span>
+        <div>
+          <strong>Material de Construção</strong><small>Gestão comercial</small>
+        </div>
+      </div>
+    </header>
+    <div th:fragment="alerts">
+      <div
+        class="alert success"
+        role="status"
+        th:if="${sucesso}"
+        th:text="${sucesso}"
+      ></div>
+      <div
+        class="alert error"
+        role="alert"
+        th:if="${erro}"
+        th:text="${erro}"
+      ></div>
+    </div>
+    <footer class="footer" th:fragment="footer">
+      <span>Construa · Sistema de Material de Construção</span
+      ><span>Feito para o dia a dia da sua loja.</span>
+    </footer>
+  </body>
+</html>
