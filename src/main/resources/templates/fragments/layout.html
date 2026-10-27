@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#245443" />
-    <title th:text="${titulo + ' · Construa'}">Construa</title>
+    <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}" />
+    <title th:text="${titulo != null ? titulo + ' · Construa' : 'Construa'}">Construa</title>
     <link rel="icon" th:href="@{/favicon.svg}" type="image/svg+xml" />
     <link rel="stylesheet" th:href="@{/css/app.css}" />
     <script th:src="@{/js/app.js}" defer></script>
