@@ -1,6 +1,7 @@
 "use strict";
 document.querySelectorAll("form").forEach((form) => {
   form.addEventListener("submit", (event) => {
+    if (event.defaultPrevented) return;
     event.preventDefault();
     const search = form.querySelector('input[name="busca"]');
     if (search) {

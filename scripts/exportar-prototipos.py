@@ -43,6 +43,7 @@ def exportar(base):
         with urlopen(base.rstrip('/') + rota) as resposta:
             html = resposta.read().decode('utf-8')
         html = re.sub(r'<input\b[^>]*name="_csrf"[^>]*>', '', html)
+        html = re.sub(r'<meta\b[^>]*name="_csrf"[^>]*>', '', html)
         html = re.sub(r'href="([^"]+)"', lambda m: 'href="' + destino(m[1]) + '"', html)
         html = html.replace('href="/css/app.css"', 'href="assets/app.css"')
         html = html.replace('href="/favicon.svg"', 'href="assets/favicon.svg"')

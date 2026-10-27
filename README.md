@@ -216,7 +216,7 @@ Exemplo ao salvar uma venda: o `VendaController` valida o formulário e chama `V
 ./mvnw verify
 ```
 
-A suíte tem 30 testes e foi executada com sucesso em H2 em memória e PostgreSQL 17. O banco de testes é separado do banco local. Cobrem renderização das telas, CRUDs via HTTP, validação de CPF e preços, CSRF, escape HTML, agrupamento de produtos, cálculo de totais, edição com preço histórico, rollback, exclusão em cascata e bloqueio de cadastros em uso. O GitHub Actions executa a mesma verificação a cada push e pull request.
+A suíte tem 32 testes. Os testes de CRUD e regras de negócio foram executados em H2 e PostgreSQL 17; os testes HTTP com Tomcat verificam sessões novas e páginas de erro. O banco de testes é separado do banco local. Cobrem renderização das telas, CRUDs via HTTP, validação de CPF e preços, CSRF, escape HTML, agrupamento de produtos, cálculo de totais, edição com preço histórico, rollback, exclusão em cascata e bloqueio de cadastros em uso. O GitHub Actions executa a mesma verificação a cada push e pull request.
 
 ## Referências
 
