@@ -1,0 +1,8 @@
+flowchart LR
+    N["Navegador · HTML/CSS/JS"] --> C["Controller · Spring MVC"]
+    C --> S["Service · regras e transações"]
+    S --> R["Repository · Spring Data JPA"]
+    R --> B[("H2 / PostgreSQL")]
+    S --> E["Entity · modelo de domínio"]
+    C --> V["View · Thymeleaf"]
+    V --> N

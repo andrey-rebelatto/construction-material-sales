@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#245443" />
+    <title>Vendas · Construa</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/app.css" />
+    <script src="assets/app.js" defer></script>
+    <script src="assets/prototipo.js" defer></script>
+  </head>
+  <body>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+        <symbol
+          id="i-grid"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="3" width="7" height="7" rx="1.5" />
+          <rect x="14" y="3" width="7" height="7" rx="1.5" />
+          <rect x="3" y="14" width="7" height="7" rx="1.5" />
+          <rect x="14" y="14" width="7" height="7" rx="1.5" />
+        </symbol>
+        <symbol
+          id="i-bag"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 7h14l1 14H4L5 7Z" />
+          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+        </symbol>
+        <symbol
+          id="i-users"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.87"
+          />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M16 3a4 4 0 0 1 0 8" />
+        </symbol>
+        <symbol
+          id="i-box"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="m12 3 9 5-9 5-9-5 9-5Zm-9 5v10l9 5 9-5V8M12 13v10M7 5.8l9 5"
+          />
+        </symbol>
+        <symbol
+          id="i-user"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="7" r="4" />
+          <path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2" />
+        </symbol>
+        <symbol
+          id="i-plus"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </symbol>
+        <symbol
+          id="i-arrow"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12h14m-5-5 5 5-5 5" />
+        </symbol>
+        <symbol
+          id="i-back"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5m5-5-5 5 5 5" />
+        </symbol>
+        <symbol
+          id="i-edit"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m16 3 5 5-12 12-6 1 1-6L16 3ZM13 6l5 5" />
+        </symbol>
+        <symbol
+          id="i-delete"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7" />
+        </symbol>
+        <symbol
+          id="i-search"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="10.5" cy="10.5" r="7" />
+          <path d="m16 16 5 5" />
+        </symbol>
+        <symbol
+          id="i-check"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m5 12 4 4L19 6" />
+        </symbol>
+        <symbol
+          id="i-coin"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="M15 8H10a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H9m3-10v12" />
+        </symbol>
+        <symbol
+          id="i-info"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 11v6m0-10v1" />
+        </symbol>
+        <symbol
+          id="i-eye"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" />
+          <circle cx="12" cy="12" r="3" />
+        </symbol>
+        <symbol
+          id="i-menu"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </symbol>
+      </svg>
+      <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+        <a class="brand" href="index.html"
+          ><span class="brand-icon">⌂</span
+          ><span>construa<small>GESTÃO DE VENDAS</small></span></a
+        >
+        <p class="nav-label">ESPAÇO DE TRABALHO</p>
+        <nav class="nav">
+          <a href="index.html"
+            ><svg class="icon" aria-hidden="true"><use href="#i-grid" /></svg
+            ><span>Visão geral</span></a
+          ><a href="vendas.html" class="active"
+            ><svg class="icon" aria-hidden="true"><use href="#i-bag" /></svg
+            ><span>Vendas</span></a
+          ><a href="clientes.html"
+            ><svg class="icon" aria-hidden="true"><use href="#i-users" /></svg
+            ><span>Clientes</span></a
+          ><a href="produtos.html"
+            ><svg class="icon" aria-hidden="true"><use href="#i-box" /></svg
+            ><span>Produtos</span></a
+          ><a href="vendedores.html"
+            ><svg class="icon" aria-hidden="true"><use href="#i-user" /></svg
+            ><span>Vendedores</span></a
+          >
+        </nav>
+        <div class="nav-footer">
+          <span class="tag"><span class="dot"></span> Sistema de vendas</span>
+          <p
+            class="muted"
+            style="font-size: 10px; line-height: 1.7; margin-bottom: 0"
+          >
+            Materiais para construir.<br />Organização para crescer.
+          </p>
+        </div>
+      </aside>
+    </div>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <button
+            class="menu-toggle"
+            aria-label="Abrir menu"
+            aria-controls="sidebar"
+            aria-expanded="false"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="#i-menu" />
+            </svg></button
+          ><a class="mobile-brand" href="index.html">construa</a>
+          <div class="breadcrumbs">
+            Espaço de trabalho &nbsp; / <span>Vendas</span>
+          </div>
+        </div>
+        <div class="profile">
+          <span class="avatar">MC</span>
+          <div>
+            <strong>Material de Construção</strong
+            ><small>Gestão comercial</small>
+          </div>
+        </div>
+      </header>
+      <main class="main">
+        <div class="alert success">
+          Protótipo navegável · Dados de demonstração · Alterações não são
+          salvas.
+        </div>
+        <div></div>
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">NEGÓCIOS QUE CONSTROEM</span>
+            <h1>Vendas</h1>
+            <p>Consulte, edite e acompanhe cada venda da sua loja.</p>
+          </div>
+          <a class="btn" href="venda-nova.html"
+            ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
+            Nova venda</a
+          >
+        </div>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Histórico de vendas</h2>
+              <p>Da mais recente para a mais antiga.</p>
+            </div>
+            <span class="tag">2 venda(s)</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Venda</th>
+                  <th>Cliente</th>
+                  <th>Data</th>
+                  <th>Total</th>
+                  <th><span class="muted">Detalhes</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a class="id" href="venda-detalhe-2.html">#0002</a></td>
+                  <td>
+                    <strong>Carlos Lima</strong><small>Marina Costa</small>
+                  </td>
+                  <td>27/10/2026</td>
+                  <td class="amount">R$ 816,00</td>
+                  <td>
+                    <a
+                      class="action"
+                      href="venda-detalhe-2.html"
+                      aria-label="Ver venda 2"
+                      ><svg class="icon" aria-hidden="true">
+                        <use href="#i-arrow" /></svg
+                    ></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a class="id" href="venda-detalhe.html">#0001</a></td>
+                  <td><strong>Ana Souza</strong><small>Bruno Alves</small></td>
+                  <td>27/10/2026</td>
+                  <td class="amount">R$ 519,00</td>
+                  <td>
+                    <a
+                      class="action"
+                      href="venda-detalhe.html"
+                      aria-label="Ver venda 1"
+                      ><svg class="icon" aria-hidden="true">
+                        <use href="#i-arrow" /></svg
+                    ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-foot">
+            Abra uma venda para consultar os itens, editar ou excluir.
+          </div>
+        </section>
+        <footer class="footer">
+          <span>Construa · Sistema de Material de Construção</span
+          ><span>Feito para o dia a dia da sua loja.</span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+erDiagram
+    CLIENTES ||--o{ VENDAS : realiza
+    VENDEDORES ||--o{ VENDAS : registra
+    VENDAS ||--|{ ITENS_VENDA : contem
+    PRODUTOS ||--o{ ITENS_VENDA : participa
+    CLIENTES {
+        bigint id PK
+        varchar_120 nome
+        varchar_11 cpf UK
+    }
+    VENDEDORES {
+        bigint id PK
+        varchar_120 nome
+        varchar_11 cpf UK
+    }
+    PRODUTOS {
+        bigint id PK
+        varchar_120 nome
+        numeric_12_2 preco
+    }
+    VENDAS {
+        bigint id PK
+        timestamp data_hora
+        bigint cliente_id FK
+        bigint vendedor_id FK
+    }
+    ITENS_VENDA {
+        bigint id PK
+        bigint venda_id FK
+        bigint produto_id FK
+        integer quantidade
+        numeric_12_2 preco_unitario
+    }
