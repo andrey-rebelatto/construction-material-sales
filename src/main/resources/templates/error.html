@@ -2,14 +2,12 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="~{fragments/layout :: head}"></head>
   <body>
-    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div th:replace="~{fragments/layout :: navigation}"></div>
     <div class="shell">
-      <header th:replace="~{fragments/layout :: topbar}"></header>
       <main class="main">
         <div th:replace="~{fragments/layout :: alerts}"></div>
         <div class="page-heading">
           <div>
-            <span class="eyebrow">VAMOS ENCONTRAR O CAMINHO</span>
             <h1>
               <span
                 th:text="${status == 404 ? 'Página não encontrada' : 'Não foi possível concluir'}"
@@ -22,15 +20,11 @@
           </div>
         </div>
         <section class="panel empty">
-          <svg class="icon" aria-hidden="true"><use href="#i-info" /></svg>
           <h3
-            th:text="${status == 404 ? 'Nada por aqui' : 'Tente novamente'}"
+            th:text="${status == 404 ? 'Registro não encontrado' : 'Tente novamente'}"
           ></h3>
           <p>Volte ao início para continuar usando o sistema.</p>
-          <a class="btn" th:href="@{/}"
-            ><svg class="icon" aria-hidden="true"><use href="#i-back" /></svg>
-            Ir para o início</a
-          >
+          <a class="btn" th:href="@{/}"> Ir para o início</a>
         </section>
         <footer th:replace="~{fragments/layout :: footer}"></footer>
       </main>

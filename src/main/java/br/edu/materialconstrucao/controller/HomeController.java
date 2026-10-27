@@ -28,7 +28,7 @@ public class HomeController {
   @GetMapping("/")
   public String index(Model model) {
     var lista = vendas.listar();
-    model.addAttribute("titulo", "Visão geral");
+    model.addAttribute("titulo", "Início");
     model.addAttribute("secao", "inicio");
     model.addAttribute(
         "total", lista.stream().map(Venda::getTotal).reduce(BigDecimal.ZERO, BigDecimal::add));

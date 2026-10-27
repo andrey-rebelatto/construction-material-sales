@@ -2,201 +2,77 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="~{fragments/layout :: head}"></head>
   <body>
-    <div th:replace="~{fragments/layout :: sidebar}"></div>
-    <div class="shell">
-      <header th:replace="~{fragments/layout :: topbar}"></header>
-      <main class="main">
-        <div th:replace="~{fragments/layout :: alerts}"></div>
-        <div class="page-heading">
-          <div>
-            <span class="eyebrow">SEU NEGÓCIO, EM UM SÓ LUGAR</span>
-            <h1>Visão geral</h1>
-            <p>Acompanhe as vendas e organize os próximos passos.</p>
-          </div>
-          <a class="btn" th:href="@{/vendas/nova}"
-            ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
-            Nova venda</a
-          >
-        </div>
-        <section class="welcome">
-          <div>
-            <span class="eyebrow">CADA VENDA, UMA NOVA CONSTRUÇÃO</span>
-            <h2>Uma boa obra começa<br />com uma boa gestão.</h2>
-            <p>
-              Clientes, materiais e vendas conectados.<br />Mais tempo para
-              cuidar do que você constrói.
-            </p>
-            <a class="btn lime" th:href="@{/vendas}"
-              ><svg class="icon" aria-hidden="true">
-                <use href="#i-arrow" />
-              </svg>
-              Explorar vendas</a
-            >
-          </div>
-          <svg
-            class="blueprint"
-            viewBox="0 0 300 230"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1"
-          >
-            <path d="m30 157 100-55 126 68-100 55-126-68Z" opacity=".3" />
-            <path d="m54 147 77-42 101 54-77 43-101-55Z" />
-            <path
-              d="M54 147V73l77-42 101 54v74M131 31v74M54 73l101 55 77-43M155 128v74M79 161v-55l30 16v55M177 185v-43l31-17v44M75 84v15l31 17V101M178 105v15l29-16V89"
-            />
-            <path
-              d="m29 58 100-54 129 69M129 4v20M38 54v88M243 83v90M28 179l126 68 113-61M152 220v25"
-              opacity=".4"
-            />
-            <path d="m102 51 28-15 77 41-28 16-77-42Z" opacity=".3" />
-          </svg>
-        </section>
-        <section class="metrics" aria-label="Indicadores">
-          <article class="metric">
-            <div class="metric-top">
-              <span>Total em vendas</span
-              ><span class="metric-icon"
-                ><svg class="icon" aria-hidden="true">
-                  <use href="#i-coin" /></svg
-              ></span>
-            </div>
-            <strong th:text="${@fmt.moeda(total)}"></strong
-            ><small>Valor de todas as vendas</small>
-          </article>
-          <article class="metric">
-            <div class="metric-top">
-              <span>Vendas registradas</span
-              ><span class="metric-icon"
-                ><svg class="icon" aria-hidden="true"><use href="#i-bag" /></svg
-              ></span>
-            </div>
-            <strong th:text="${quantidadeVendas}"></strong
-            ><small>Histórico da sua operação</small>
-          </article>
-          <article class="metric">
-            <div class="metric-top">
-              <span>Clientes cadastrados</span
-              ><span class="metric-icon"
-                ><svg class="icon" aria-hidden="true">
-                  <use href="#i-users" /></svg
-              ></span>
-            </div>
-            <strong th:text="${quantidadeClientes}"></strong
-            ><small>Relacionamentos que constroem</small>
-          </article>
-          <article class="metric">
-            <div class="metric-top">
-              <span>Produtos no catálogo</span
-              ><span class="metric-icon"
-                ><svg class="icon" aria-hidden="true"><use href="#i-box" /></svg
-              ></span>
-            </div>
-            <strong th:text="${quantidadeProdutos}"></strong
-            ><small>Materiais prontos para vender</small>
-          </article>
-        </section>
-        <div class="dashboard-grid">
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <h2>Últimas vendas</h2>
-                <p>Os negócios mais recentes da sua loja.</p>
-              </div>
-              <a class="text-link" th:href="@{/vendas}"
-                >Ver todas
-                <svg class="icon" aria-hidden="true">
-                  <use href="#i-arrow" /></svg
-              ></a>
-            </div>
-            <div class="table-scroll" th:unless="${#lists.isEmpty(vendas)}">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Venda</th>
-                    <th>Cliente</th>
-                    <th>Data</th>
-                    <th>Total</th>
-                    <th><span class="muted">Detalhes</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="venda : ${vendas}">
-                    <td>
-                      <a
-                        class="id"
-                        th:href="@{/vendas/{id}(id=${venda.id})}"
-                        th:text="${'#' + #numbers.formatInteger(venda.id, 4)}"
-                      ></a>
-                    </td>
-                    <td>
-                      <strong th:text="${venda.cliente.nome}"></strong
-                      ><small th:text="${venda.vendedor.nome}"></small>
-                    </td>
-                    <td
-                      th:text="${#temporals.format(venda.dataHora, 'dd/MM/yyyy')}"
-                    ></td>
-                    <td
-                      class="amount"
-                      th:text="${@fmt.moeda(venda.total)}"
-                    ></td>
-                    <td>
-                      <a
-                        class="action"
-                        th:href="@{/vendas/{id}(id=${venda.id})}"
-                        th:aria-label="${'Ver venda ' + venda.id}"
-                        ><svg class="icon" aria-hidden="true">
-                          <use href="#i-arrow" /></svg
-                      ></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="empty" th:if="${#lists.isEmpty(vendas)}">
-              <svg class="icon" aria-hidden="true"><use href="#i-box" /></svg>
-              <h3>Seu próximo negócio começa aqui</h3>
-              <p>Registre a primeira venda da loja.</p>
-              <a class="btn" th:href="@{/vendas/nova}"
-                ><svg class="icon" aria-hidden="true">
-                  <use href="#i-plus" />
-                </svg>
-                Nova venda</a
-              >
-            </div>
-            <div class="table-foot">Exibindo até 5 vendas mais recentes</div>
-          </section>
-          <aside class="dashboard-side">
-            <div class="panel quick">
-              <h2>Acesso rápido</h2>
-              <p>O que vamos fazer agora?</p>
-              <a th:href="@{/vendas/nova}"
-                ><svg class="icon" aria-hidden="true"><use href="#i-bag" /></svg
-                ><span>Registrar venda</span><span>↗</span></a
-              ><a th:href="@{/clientes/novo}"
-                ><svg class="icon" aria-hidden="true">
-                  <use href="#i-users" /></svg
-                ><span>Cadastrar cliente</span><span>↗</span></a
-              ><a th:href="@{/produtos/novo}"
-                ><svg class="icon" aria-hidden="true"><use href="#i-box" /></svg
-                ><span>Adicionar produto</span><span>↗</span></a
-              ><a th:href="@{/vendedores/novo}"
-                ><svg class="icon" aria-hidden="true">
-                  <use href="#i-user" /></svg
-                ><span>Cadastrar vendedor</span><span>↗</span></a
-              >
-            </div>
-            <div class="note">
-              <h3>Organização que rende</h3>
-              <p>
-                Mantenha seu catálogo atualizado. Os preços das vendas já
-                registradas ficam preservados.
-              </p>
-            </div>
-          </aside>
-        </div>
-        <footer th:replace="~{fragments/layout :: footer}"></footer>
-      </main>
-    </div>
+    <header th:replace="~{fragments/layout :: navigation}"></header>
+    <main class="main">
+      <div th:replace="~{fragments/layout :: alerts}"></div>
+      <h1>Início</h1>
+      <p>Use o menu para cadastrar clientes, vendedores, produtos e vendas.</p>
+      <h2>Resumo</h2>
+      <ul class="summary">
+        <li>
+          Clientes cadastrados:
+          <strong th:text="${quantidadeClientes}"></strong>
+        </li>
+        <li>
+          Vendedores cadastrados:
+          <strong th:text="${quantidadeVendedores}"></strong>
+        </li>
+        <li>
+          Produtos cadastrados:
+          <strong th:text="${quantidadeProdutos}"></strong>
+        </li>
+        <li>
+          Vendas registradas: <strong th:text="${quantidadeVendas}"></strong>
+        </li>
+        <li>Total vendido: <strong th:text="${@fmt.moeda(total)}"></strong></li>
+      </ul>
+      <div class="page-heading">
+        <h2>Últimas vendas</h2>
+        <a class="btn" th:href="@{/vendas/nova}">Nova venda</a>
+      </div>
+      <div class="table-scroll" th:unless="${#lists.isEmpty(vendas)}">
+        <table>
+          <thead>
+            <tr>
+              <th>Venda</th>
+              <th>Cliente</th>
+              <th>Data</th>
+              <th>Total</th>
+              <th><span class="muted">Detalhes</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="venda : ${vendas}">
+              <td>
+                <a
+                  class="id"
+                  th:href="@{/vendas/{id}(id=${venda.id})}"
+                  th:text="${'#' + #numbers.formatInteger(venda.id, 4)}"
+                ></a>
+              </td>
+              <td>
+                <strong th:text="${venda.cliente.nome}"></strong
+                ><small th:text="${venda.vendedor.nome}"></small>
+              </td>
+              <td
+                th:text="${#temporals.format(venda.dataHora, 'dd/MM/yyyy')}"
+              ></td>
+              <td class="amount" th:text="${@fmt.moeda(venda.total)}"></td>
+              <td>
+                <a
+                  class="action"
+                  th:href="@{/vendas/{id}(id=${venda.id})}"
+                  th:aria-label="${'Ver venda ' + venda.id}"
+                  >Detalhes</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p th:if="${#lists.isEmpty(vendas)}">Nenhuma venda cadastrada.</p>
+      <p><a th:href="@{/vendas}">Ver todas as vendas</a></p>
+      <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
   </body>
 </html>

@@ -2,31 +2,22 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="~{fragments/layout :: head}"></head>
   <body>
-    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div th:replace="~{fragments/layout :: navigation}"></div>
     <div class="shell">
-      <header th:replace="~{fragments/layout :: topbar}"></header>
       <main class="main">
         <div th:replace="~{fragments/layout :: alerts}"></div>
         <div class="page-heading">
           <div>
-            <span class="eyebrow">ORGANIZE SEUS CADASTROS</span>
             <h1><span th:text="${titulo}"></span></h1>
-            <p>
-              <span
-                th:text="${tipo == 'preco' ? 'Os materiais que fazem parte de cada obra.' : 'Pessoas que fazem parte da sua história.'}"
-              ></span>
-            </p>
           </div>
           <a class="btn" th:href="@{/{s}/novo(s=${secao})}"
-            ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg
             ><span th:text="${'Novo ' + singular}"></span
           ></a>
         </div>
         <section class="panel">
           <form class="filters" method="get" th:action="@{/{s}(s=${secao})}">
             <div class="search">
-              <svg class="icon" aria-hidden="true"><use href="#i-search" /></svg
-              ><input
+              <input
                 aria-label="Buscar por nome"
                 name="busca"
                 th:value="${busca}"
@@ -80,9 +71,8 @@
                         class="action"
                         th:href="@{/{s}/{id}/editar(s=${secao},id=${registro.id})}"
                         th:aria-label="${'Editar ' + registro.nome}"
-                        ><svg class="icon" aria-hidden="true">
-                          <use href="#i-edit" /></svg
-                      ></a>
+                        >Editar</a
+                      >
                       <form
                         method="post"
                         th:action="@{/{s}/{id}/excluir(s=${secao},id=${registro.id})}"
@@ -93,9 +83,7 @@
                           type="submit"
                           th:aria-label="${'Excluir ' + registro.nome}"
                         >
-                          <svg class="icon" aria-hidden="true">
-                            <use href="#i-delete" />
-                          </svg>
+                          Excluir
                         </button>
                       </form>
                     </div>
@@ -105,11 +93,9 @@
             </table>
           </div>
           <div class="empty" th:if="${#lists.isEmpty(registros)}">
-            <svg class="icon" aria-hidden="true"><use href="#i-search" /></svg>
             <h3>Nenhum registro encontrado</h3>
             <p>Cadastre um novo registro ou tente outro nome na busca.</p>
             <a class="btn" th:href="@{/{s}/novo(s=${secao})}"
-              ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg
               ><span th:text="${'Novo ' + singular}"></span
             ></a>
           </div>

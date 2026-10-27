@@ -2,26 +2,22 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="~{fragments/layout :: head}"></head>
   <body>
-    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div th:replace="~{fragments/layout :: navigation}"></div>
     <div class="shell">
-      <header th:replace="~{fragments/layout :: topbar}"></header>
       <main class="main">
         <div th:replace="~{fragments/layout :: alerts}"></div>
         <a class="back" th:href="@{/{s}(s=${secao})}"
-          ><svg class="icon" aria-hidden="true"><use href="#i-back" /></svg
           ><span
             th:text="${'Voltar para ' + #strings.toLowerCase(titulo)}"
           ></span
         ></a>
         <div class="page-heading">
           <div>
-            <span class="eyebrow">CADA DETALHE CONTA</span>
             <h1>
               <span
                 th:text="${(id == null ? 'Novo ' : 'Editar ') + singular}"
               ></span>
             </h1>
-            <p>Preencha os dados abaixo para manter tudo em dia.</p>
           </div>
         </div>
         <div class="form-layout">
@@ -31,7 +27,6 @@
                 <h2>Informações do cadastro</h2>
                 <p>Os campos com * são obrigatórios.</p>
               </div>
-              <svg class="icon" aria-hidden="true"><use href="#i-edit" /></svg>
             </div>
             <form
               method="post"
@@ -96,35 +91,10 @@
               <div class="form-actions">
                 <a class="btn secondary" th:href="@{/{s}(s=${secao})}"
                   >Cancelar</a
-                ><button class="btn" type="submit">
-                  <svg class="icon" aria-hidden="true">
-                    <use href="#i-check" /></svg
-                  >Salvar cadastro
-                </button>
+                ><button class="btn" type="submit">Salvar cadastro</button>
               </div>
             </form>
           </section>
-          <aside class="aside-guide">
-            <span class="guide-icon"
-              ><svg class="icon" aria-hidden="true"><use href="#i-info" /></svg
-            ></span>
-            <h3>Um cadastro bem cuidado</h3>
-            <p th:if="${tipo == 'cpf'}">
-              Use o nome completo e confira o CPF antes de salvar. O sistema
-              verifica os dígitos e impede CPFs duplicados.
-            </p>
-            <p th:if="${tipo == 'preco'}">
-              Descreva o material de forma clara. Inclua o peso, a medida ou a
-              embalagem quando fizer sentido.
-            </p>
-            <div class="note">
-              <h3>Seus dados ficam protegidos</h3>
-              <p>
-                Cadastros usados em vendas não podem ser excluídos. Você pode
-                editar seus dados quando precisar.
-              </p>
-            </div>
-          </aside>
         </div>
         <footer th:replace="~{fragments/layout :: footer}"></footer>
       </main>

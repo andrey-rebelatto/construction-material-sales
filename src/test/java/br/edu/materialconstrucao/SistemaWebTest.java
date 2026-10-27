@@ -70,7 +70,7 @@ class SistemaWebTest {
   void renderizaTelas(String rota) throws Exception {
     mvc.perform(get(rota))
         .andExpect(status().isOk())
-        .andExpect(content().string(org.hamcrest.Matchers.containsString("construa")));
+        .andExpect(content().string(org.hamcrest.Matchers.containsString("Sistema de vendas")));
   }
 
   @Test

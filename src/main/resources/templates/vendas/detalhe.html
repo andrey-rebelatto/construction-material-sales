@@ -2,30 +2,23 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="~{fragments/layout :: head}"></head>
   <body>
-    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div th:replace="~{fragments/layout :: navigation}"></div>
     <div class="shell">
-      <header th:replace="~{fragments/layout :: topbar}"></header>
       <main class="main">
         <div th:replace="~{fragments/layout :: alerts}"></div>
-        <a class="back" th:href="@{/vendas}"
-          ><svg class="icon" aria-hidden="true"><use href="#i-back" /></svg
-          >Voltar para vendas</a
-        >
+        <a class="back" th:href="@{/vendas}">Voltar para vendas</a>
         <div class="page-heading">
           <div>
-            <span class="eyebrow">CADA VENDA TEM UMA HISTÓRIA</span>
             <h1>
               <span
                 th:text="${'Venda #' + #numbers.formatInteger(venda.id, 4)}"
               ></span>
             </h1>
-            <p>Confira os materiais e os dados desta venda.</p>
           </div>
           <div class="actions">
             <a
               class="btn secondary"
               th:href="@{/vendas/{id}/editar(id=${venda.id})}"
-              ><svg class="icon" aria-hidden="true"><use href="#i-edit" /></svg
               >Editar venda</a
             >
             <form
@@ -33,11 +26,7 @@
               th:action="@{/vendas/{id}/excluir(id=${venda.id})}"
               data-confirm="Excluir esta venda e todos os seus itens? Esta ação não pode ser desfeita."
             >
-              <button class="btn danger" type="submit">
-                <svg class="icon" aria-hidden="true">
-                  <use href="#i-delete" /></svg
-                >Excluir
-              </button>
+              <button class="btn danger" type="submit">Excluir</button>
             </form>
           </div>
         </div>
@@ -46,10 +35,7 @@
             <div>
               <small>Cliente</small
               ><strong th:text="${venda.cliente.nome}"></strong
-              ><small
-                style="margin: 7px 0 0"
-                th:text="${@fmt.cpf(venda.cliente.cpf)}"
-              ></small>
+              ><small th:text="${@fmt.cpf(venda.cliente.cpf)}"></small>
             </div>
             <div>
               <small>Vendedor responsável</small

@@ -2,21 +2,15 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="~{fragments/layout :: head}"></head>
   <body>
-    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    <div th:replace="~{fragments/layout :: navigation}"></div>
     <div class="shell">
-      <header th:replace="~{fragments/layout :: topbar}"></header>
       <main class="main">
         <div th:replace="~{fragments/layout :: alerts}"></div>
         <div class="page-heading">
           <div>
-            <span class="eyebrow">NEGÓCIOS QUE CONSTROEM</span>
             <h1>Vendas</h1>
-            <p>Consulte, edite e acompanhe cada venda da sua loja.</p>
           </div>
-          <a class="btn" th:href="@{/vendas/nova}"
-            ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
-            Nova venda</a
-          >
+          <a class="btn" th:href="@{/vendas/nova}"> Nova venda</a>
         </div>
         <section class="panel">
           <div class="panel-head">
@@ -62,22 +56,17 @@
                       class="action"
                       th:href="@{/vendas/{id}(id=${venda.id})}"
                       th:aria-label="${'Ver venda ' + venda.id}"
-                      ><svg class="icon" aria-hidden="true">
-                        <use href="#i-arrow" /></svg
-                    ></a>
+                      >Detalhes</a
+                    >
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="empty" th:if="${#lists.isEmpty(vendas)}">
-            <svg class="icon" aria-hidden="true"><use href="#i-box" /></svg>
-            <h3>Nenhuma venda por enquanto</h3>
-            <p>Comece escolhendo um cliente e os materiais da obra.</p>
-            <a class="btn" th:href="@{/vendas/nova}"
-              ><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>
-              Registrar primeira venda</a
-            >
+            <h3>Nenhuma venda cadastrada</h3>
+            <p>Clique em Nova venda para cadastrar.</p>
+            <a class="btn" th:href="@{/vendas/nova}"> Nova venda</a>
           </div>
           <div class="table-foot">
             Abra uma venda para consultar os itens, editar ou excluir.
