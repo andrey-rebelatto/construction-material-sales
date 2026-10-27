@@ -8,9 +8,9 @@
     <relativePath/>
   </parent>
   <groupId>br.edu</groupId>
-  <artifactId>material-construcao-web</artifactId>
+  <artifactId>construction-material-sales</artifactId>
   <version>1.0.0</version>
-  <name>Construa · Gestão de vendas</name>
+  <name>Sistema de vendas de materiais de construção</name>
   <description>Sistema web de vendas de materiais de construção</description>
   <properties>
     <java.version>21</java.version>
