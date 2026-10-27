@@ -1,8 +1,8 @@
 # Roteiro de apresentação
 
 1. Abra o README e apresente o tema, o diagrama de classes e o MER. Mostre as cinco tabelas e explique as relações entre venda, item e produto.
-2. Abra o link dos protótipos. Navegue pelo painel, pelas listagens e pela tela de nova venda. Explique que essas páginas demonstram o fluxo visual e não salvam dados.
-3. Execute `./mvnw spring-boot:run` e abra `http://localhost:8080`. Mostre o painel com dados de exemplo.
+2. Abra o link dos protótipos. Navegue pela página inicial, pelas listagens e pela tela de nova venda. Explique que essas páginas demonstram o fluxo visual e não salvam dados.
+3. Execute `./mvnw spring-boot:run` e abra `http://localhost:8080`. Mostre a página inicial com dados de exemplo.
 4. Cadastre um cliente com nome e CPF válido. Edite o nome, busque por ele e exclua o cadastro. Tente um CPF inválido para mostrar a validação. Use um CPF de teste diferente dos dados iniciais, como `123.456.789-09`.
 5. Cadastre um vendedor e um produto. Edite e exclua um registro sem vínculo para demonstrar os demais CRUDs.
 6. Crie uma venda para Ana Souza, com Bruno Alves como vendedor. Adicione 2 sacos de cimento a R$ 38,90 e 3 sacos de areia a R$ 6,50. O total deve ser R$ 97,30. Adicione uma segunda linha do mesmo produto e mostre o agrupamento após salvar.

@@ -1,16 +1,4 @@
 "use strict";
-const menu = document.querySelector(".menu-toggle");
-menu?.addEventListener("click", () => {
-  const open = document.querySelector("#sidebar").classList.toggle("open");
-  menu.setAttribute("aria-expanded", String(open));
-  menu.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
-});
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && menu) {
-    document.querySelector("#sidebar").classList.remove("open");
-    menu.setAttribute("aria-expanded", "false");
-  }
-});
 document.querySelectorAll("form[data-confirm]").forEach((form) => {
   form.addEventListener("submit", (event) => {
     if (!window.confirm(form.dataset.confirm)) event.preventDefault();

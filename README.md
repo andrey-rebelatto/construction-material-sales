@@ -1,12 +1,12 @@
-# Construa · Gestão de vendas
+# Sistema de vendas de materiais de construção
 
 Sistema web para uma loja de materiais de construção. Permite cadastrar clientes, vendedores e produtos, montar vendas com vários materiais e consultar o histórico. Migração do [projeto Java Swing](https://github.com/ewillcode/poo-jdbc-swing) para **Spring MVC, Thymeleaf e Spring Data JPA**, com Java 21.
 
-**Repositório para entrega:** https://github.com/andrey-rebelatto/material-construcao-web
+**Repositório para entrega:** https://github.com/andrey-rebelatto/construction-material-sales
 
-**[Abrir os protótipos navegáveis](https://andrey-rebelatto.github.io/material-construcao-web/prototipos/)** · [Arquivos dos protótipos](docs/prototipos/) · [Roteiro de apresentação](docs/roteiro-apresentacao.md)
+**[Abrir os protótipos navegáveis](https://andrey-rebelatto.github.io/construction-material-sales/prototipos/)** · [Arquivos dos protótipos](docs/prototipos/) · [Roteiro de apresentação](docs/roteiro-apresentacao.md)
 
-![Painel do sistema](docs/prototipos/imagens/01-painel.png)
+![Página inicial do sistema](docs/prototipos/imagens/01-painel.png)
 
 ## Critérios da atividade
 
@@ -20,7 +20,7 @@ Sistema web para uma loja de materiais de construção. Permite cadastrar client
 | Model | Pacotes `model/entity`, `model/repository` e `model/service`. |
 | Control | Pacote `controller`, com formulários em `controller/form`. Controllers acessam os services. |
 | View | Templates Thymeleaf em `templates`, CSS e JavaScript em `static`. |
-| Protótipos de tela | [Versão navegável](https://andrey-rebelatto.github.io/material-construcao-web/prototipos/) e capturas em `docs/prototipos/imagens`. |
+| Protótipos de tela | [Versão navegável](https://andrey-rebelatto.github.io/construction-material-sales/prototipos/) e capturas em `docs/prototipos/imagens`. |
 | Diagrama de classes | Incluído abaixo e em [Mermaid](docs/diagramas/classes.mmd). |
 | Diagrama MER | Incluído abaixo e em [Mermaid](docs/diagramas/mer.mmd), compatível com a migração SQL. |
 | README e GitHub | Este arquivo documenta a execução, os diagramas e os links de entrega. |
@@ -30,8 +30,8 @@ Sistema web para uma loja de materiais de construção. Permite cadastrar client
 Instale o **JDK 21**. O Maven Wrapper baixa o Maven na primeira execução, que precisa de internet.
 
 ```bash
-git clone https://github.com/andrey-rebelatto/material-construcao-web.git
-cd material-construcao-web
+git clone https://github.com/andrey-rebelatto/construction-material-sales.git
+cd construction-material-sales
 ./mvnw spring-boot:run
 ```
 
@@ -62,13 +62,13 @@ O comando `read -s` é para Bash/Zsh. Configure `DB_PASSWORD` pelo mecanismo do 
 
 ## Funcionalidades e regras
 
-- **Painel:** total vendido, quantidade de vendas, clientes e produtos, últimas vendas e atalhos.
+- **Início:** resumo dos cadastros, total vendido e últimas vendas.
 - **Clientes e vendedores:** nome e CPF, busca por nome, cadastro, edição e exclusão. CPF com validação dos dígitos e unicidade por tabela, armazenado sem pontuação.
 - **Produtos:** nome, preço positivo com até duas casas decimais, busca e CRUD completo.
 - **Vendas:** cliente, vendedor e até 100 linhas de materiais. Quantidades inteiras de 1 a 1.000.000 por produto; produtos repetidos são agrupados. Total recalculado no servidor com `BigDecimal`.
 - **Histórico de preço:** cada item guarda o preço unitário da venda. Alterar o catálogo não muda o histórico. Ao editar uma venda, produtos mantidos conservam o preço original; produtos novos usam o preço atual.
 - **Integridade:** venda e itens são gravados na mesma transação. Cadastros vinculados não podem ser excluídos. A exclusão de venda remove seus itens.
-- **Interface:** navegação responsiva, menu no celular, mensagens de validação, estados vazios e confirmação antes de excluir.
+- **Interface:** menu horizontal, tabelas e formulários com CSS básico, mensagens de validação e confirmação antes de excluir.
 
 ## Primeira etapa: tema e protótipos
 
@@ -76,11 +76,11 @@ O comando `read -s` é para Bash/Zsh. Configure `DB_PASSWORD` pelo mecanismo do 
 
 **Objetivo:** substituir as janelas Swing por telas web, mantendo as entidades e regras centrais do projeto original.
 
-Os protótipos são telas HTML de alta fidelidade, com dados fictícios. Os links permitem navegar entre listagens, cadastros, edição e detalhes. O carrinho demonstra inclusão e remoção de materiais e cálculo do total. **Os protótipos estáticos não gravam no banco**; o CRUD real funciona ao executar o Spring Boot.
+Os protótipos são telas HTML simples, com dados fictícios. Os links permitem navegar entre listagens, cadastros, edição e detalhes. O carrinho demonstra inclusão e remoção de materiais e cálculo do total. **Os protótipos estáticos não gravam no banco**; o CRUD real funciona ao executar o Spring Boot.
 
 | Tela | Protótipo HTML | Captura |
 | --- | --- | --- |
-| Visão geral | [Painel](docs/prototipos/index.html) | [Imagem](docs/prototipos/imagens/01-painel.png) |
+| Início | [Início](docs/prototipos/index.html) | [Imagem](docs/prototipos/imagens/01-painel.png) |
 | Clientes | [Listagem](docs/prototipos/clientes.html), [cadastro](docs/prototipos/cliente-novo.html), [edição](docs/prototipos/cliente-editar.html) | [Imagem](docs/prototipos/imagens/02-clientes.png) |
 | Vendedores | [Listagem](docs/prototipos/vendedores.html), [cadastro](docs/prototipos/vendedor-novo.html), [edição](docs/prototipos/vendedor-editar.html) | [Imagem](docs/prototipos/imagens/03-vendedores.png) |
 | Produtos | [Listagem](docs/prototipos/produtos.html), [cadastro](docs/prototipos/produto-novo.html), [edição](docs/prototipos/produto-editar.html) | [Imagem](docs/prototipos/imagens/04-produtos.png) |

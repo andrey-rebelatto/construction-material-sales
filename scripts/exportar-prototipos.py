@@ -46,15 +46,15 @@ def exportar(base):
         html = re.sub(r'<meta\b[^>]*name="_csrf"[^>]*>', '', html)
         html = re.sub(r'href="([^"]+)"', lambda m: 'href="' + destino(m[1]) + '"', html)
         html = html.replace('href="/css/app.css"', 'href="assets/app.css"')
-        html = html.replace('href="/favicon.svg"', 'href="assets/favicon.svg"')
         html = html.replace('src="/js/app.js"', 'src="assets/app.js"')
         html = re.sub(r' action="[^"]*"', ' action="#"', html)
         html = html.replace('</head>', '<script src="assets/prototipo.js" defer></script></head>')
-        html = html.replace('<main class="main">', '<main class="main"><div class="alert success">Protótipo navegável · Dados de demonstração · Alterações não são salvas.</div>')
+        html = html.replace('<main class="main">', '<main class="main"><div class="alert success">Protótipo de tela. Dados de demonstração; alterações não são salvas.</div>')
+        html = '\n'.join(linha.rstrip() for linha in html.splitlines()) + '\n'
         (pasta / arquivo).write_text(html, encoding='utf-8')
     assets = pasta / 'assets'
     assets.mkdir(exist_ok=True)
-    for origem, nome in [('css/app.css', 'app.css'), ('js/app.js', 'app.js'), ('favicon.svg', 'favicon.svg')]:
+    for origem, nome in [('css/app.css', 'app.css'), ('js/app.js', 'app.js')]:
         shutil.copyfile(raiz / 'src/main/resources/static' / origem, assets / nome)
     print(f'{len(ROTAS)} protótipos exportados para {pasta}')
 
